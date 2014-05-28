@@ -1,7 +1,7 @@
 # '#' for root prompt, '$' for regular user
 [[ $(whoami) == "root" ]] && local prompt_type='#' || local prompt_type='$'
 
-# Ret status (for red prompt if previous command exited with error)
+# Red status (for red prompt if previous command exited with error)
 local ret_status="%(?:%{$fg_bold[cyan]%}${prompt_type}:%{$fg_bold[red]%}${prompt_type}%s)"
 
 # Git
