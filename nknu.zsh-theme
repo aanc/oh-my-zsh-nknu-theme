@@ -53,10 +53,13 @@ nknu_git_status () {
 
 nknu_git_status='$(nknu_git_status)'
 
+# Display hostname in yellow if we're SSHing, green otherwise
+nknu_hostname="%{$fg[green]%}%m%{$reset_color%}"
+[[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[yellow]%}%m%{$reset_color%}"
+
 # Prompt
 PROMPT="
-%{$fg[cyan]%}\
-%{$fg_bold[white]%}%n%{$reset_color%}%{$fg[cyan]%}@%{$fg[green]%}%m%{$reset_color%} \
+%{$fg_bold[white]%}%n%{$reset_color%}%{$fg[cyan]%}@${nknu_hostname} \
 ${nknu_git_status}\
 %{$fg[white]%}[%*]
 %{$fg[cyan]%}\
