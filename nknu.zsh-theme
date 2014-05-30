@@ -17,7 +17,7 @@ nknu_git_status () {
 	local _char_status="● "
 
 	# Git status to retrieve infos
-	_s=$(command git status --porcelain -b 2>/dev/null)
+	_s=$(LANG=C command git status --porcelain -b 2>/dev/null)
 
 	# Branch name
 	local _branch=$(echo "$_s" | head -1 | grep '^## ' 2>/dev/null | sed "s/\.\.\./ /" | cut -d' ' -f2) 
