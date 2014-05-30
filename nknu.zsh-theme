@@ -57,9 +57,13 @@ nknu_git_status='$(nknu_git_status)'
 nknu_hostname="%{$fg[green]%}%m%{$reset_color%}"
 [[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[yellow]%}%m%{$reset_color%}"
 
+# Display username in red if we're root, white otherwise
+nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
+[[ $(whoami) == root ]] && nknu_username="%{$fg_bold[red]%}%n%{$reset_color%}"
+
 # Prompt
 PROMPT="
-%{$fg_bold[white]%}%n%{$reset_color%}%{$fg[cyan]%}@${nknu_hostname} \
+${nknu_username}%{$fg[cyan]%}@${nknu_hostname} \
 ${nknu_git_status}\
 %{$fg[white]%}[%*]
 %{$fg[cyan]%}\
