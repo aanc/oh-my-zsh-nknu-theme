@@ -65,9 +65,9 @@ nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
 PROMPT="
 ${nknu_username}%{$fg[cyan]%} \
 ${nknu_git_status}\
-%{$fg[white]%}[%*]
+%{$fg[white]%}%~
 %{$fg[cyan]%}\
-%{$fg[white]%}%~%{$reset_color%}%{$fg[cyan]%} ${ret_status}%{$reset_color%} "
+%{$fg[white]%}%*%{$reset_color%}%{$fg[cyan]%} ${ret_status}%{$reset_color%} "
 
 PS2=$' %{$fg[cyan]%}|>%{$reset_color%} '
 
