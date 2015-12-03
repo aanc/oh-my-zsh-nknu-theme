@@ -48,7 +48,7 @@ nknu_git_status () {
 	[[ -z $_stage_status ]] && _stage_status="%{$fg[cyan]%}$_char_status%{$reset_color%}"
 
 	# Ok, print all that stuff !
-	echo "%{$fg_bold[white]%}git:%{$reset_color%}${_branch} ${_stage_status} ${_ahead_behind}"
+	echo "%{$fg_bold[yellow]%}git:%{$reset_color%}${_branch} ${_stage_status} ${_ahead_behind}"
 }
 
 nknu_git_status='$(nknu_git_status)'
