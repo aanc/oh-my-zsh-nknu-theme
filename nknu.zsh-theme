@@ -63,7 +63,7 @@ nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
 
 # Prompt
 PROMPT="
-${nknu_username}%{$fg[cyan]%}@${nknu_hostname} \
+${nknu_username}%{$fg[cyan]%} \
 ${nknu_git_status}\
 %{$fg[white]%}[%*]
 %{$fg[cyan]%}\
