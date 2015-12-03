@@ -2,7 +2,7 @@
 
 A simple theme for oh-my-zsh
 
-![Preview](http://github.com/nwknu/oh-my-zsh-nknu-theme/raw/master/preview.png)
+![Preview](http://github.com/aanc/oh-my-zsh-nknu-theme/raw/master/preview.png)
 
 ## Setup
 1. Clone this repo
