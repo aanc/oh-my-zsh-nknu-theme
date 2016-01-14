@@ -20,7 +20,7 @@ nknu_git_status () {
 	_s=$(LANG=C command git status --porcelain -b 2>/dev/null)
 
 	# Branch name
-	local _branch=$(echo "$_s" | head -1 | grep '^## ' 2>/dev/null | sed "s/\.\.\./ /" | cut -d' ' -f2) 
+	local _branch=$(echo "$_s" | head -1 | grep '^## ' 2>/dev/null | sed "s/\.\.\./ /" | cut -d' ' -f2)
 
 	# Stop here if no branch name (to be improved for detached state)
 	[[ -z $_branch ]] && return 0
@@ -41,7 +41,7 @@ nknu_git_status () {
 	# if behind
 	local behind=
 	[[ -n $(echo "$_s" | grep '^## .*behind' 2> /dev/null) ]] && _ahead_behind="${_ahead_behind}%{$fg[red]%}${_char_behind}%{$reset_color%}" && behind=1
-	
+
 	# ahead and behind == diverged !
 	[[ -n $ahead && -n $behind ]] && _ahead_behind="%{$fg[yellow]%}${_char_diverged}%{$reset_color%}"
 
@@ -51,7 +51,14 @@ nknu_git_status () {
 	echo "%{$fg_bold[yellow]%}git:%{$reset_color%}${_branch} ${_stage_status} ${_ahead_behind}"
 }
 
+nknu_mc_status () {
+	if [[ -n $MC_SID ]]; then
+		echo "%{$fg[white]%} (mc)%{$reset_color%}"
+	fi
+}
+
 nknu_git_status='$(nknu_git_status)'
+nknu_mc_status='$(nknu_mc_status)'
 
 # Display hostname in yellow if we're SSHing, green otherwise
 nknu_hostname="%{$fg[green]%}%m%{$reset_color%}"
@@ -63,12 +70,10 @@ nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
 
 # Prompt
 PROMPT="
-${nknu_username}%{$fg[cyan]%} \
+ ${nknu_username}${nknu_mc_status}%{$fg[cyan]%} \
 ${nknu_git_status}\
 %{$fg[white]%}%~
 %{$fg[cyan]%}\
-%{$fg[white]%}%*%{$reset_color%}%{$fg[cyan]%} ${ret_status}%{$reset_color%} "
+%{$reset_color%}%{$fg[cyan]%} ${ret_status}%{$reset_color%} "
 
 PS2=$' %{$fg[cyan]%}|>%{$reset_color%} '
-
-
