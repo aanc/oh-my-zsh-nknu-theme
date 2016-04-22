@@ -51,6 +51,17 @@ nknu_git_status () {
 	echo "%{$fg_bold[yellow]%}git:%{$reset_color%}${_branch} ${_stage_status} ${_ahead_behind}"
 }
 
+# Docker
+nknu_docker_status () {
+	if [[ -n $DOCKER_HOST ]]; then
+		echo -n "%{$fg[blue]%}docker:"
+		[[ $DOCKER_TLS_VERIFY == 1 ]] && echo -n "%{$fg[green]%}"
+		[[ -n $DOCKER_MACHINE_NAME ]] && echo -n "$DOCKER_MACHINE_NAME" \
+			|| echo -n "${DOCKER_HOST/tcp:\/\//}"
+		echo -n " "
+	fi
+}
+
 nknu_mc_status () {
 	if [[ -n $MC_SID ]]; then
 		echo "%{$fg[white]%} (mc)%{$reset_color%}"
@@ -59,6 +70,7 @@ nknu_mc_status () {
 
 nknu_git_status='$(nknu_git_status)'
 nknu_mc_status='$(nknu_mc_status)'
+nknu_docker_status='$(nknu_docker_status)'
 
 # Display hostname in yellow if we're SSHing, green otherwise
 nknu_hostname="%{$fg[green]%}%m%{$reset_color%}"
@@ -72,6 +84,7 @@ nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
 PROMPT="
  ${nknu_username}${nknu_mc_status}%{$fg[cyan]%} \
 ${nknu_git_status}\
+${nknu_docker_status}\
 %{$fg[white]%}%~
 %{$fg[cyan]%}\
 %{$reset_color%}%{$fg[cyan]%} ${ret_status}%{$reset_color%} "
