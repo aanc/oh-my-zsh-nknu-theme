@@ -73,8 +73,7 @@ nknu_mc_status='$(nknu_mc_status)'
 nknu_docker_status='$(nknu_docker_status)'
 
 # Display hostname in yellow if we're SSHing, green otherwise
-nknu_hostname="%{$fg[green]%}%m%{$reset_color%}"
-[[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[yellow]%}%m%{$reset_color%}"
+[[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[red]%}@%{$fg[yellow]%}%m%{$reset_color%}"
 
 # Display username in red if we're root, white otherwise
 nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
@@ -82,7 +81,7 @@ nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
 
 # Prompt
 PROMPT="
- ${nknu_username}${nknu_mc_status}%{$fg[cyan]%} \
+ ${nknu_username}${nknu_hostname}${nknu_mc_status}%{$fg[cyan]%} \
 ${nknu_git_status}\
 ${nknu_docker_status}\
 %{$fg[white]%}%~
