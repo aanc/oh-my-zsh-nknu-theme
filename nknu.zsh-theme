@@ -51,6 +51,13 @@ nknu_git_status () {
 	echo "%{$fg_bold[yellow]%}git:%{$reset_color%}${_branch} ${_stage_status} ${_ahead_behind}"
 }
 
+nknu_svn_status () {
+	if svn info &>/dev/null; then
+		local revision=$(svn info | grep Revision | cut -d' ' -f2)
+		echo -n "%{$fg_bold[blue]%}svn:%{$fg_bold[blue]%}r${revision}%{$reset_color%} "
+	fi
+}
+
 # Docker
 nknu_docker_status () {
 	if [[ -n $DOCKER_HOST ]]; then
@@ -69,6 +76,7 @@ nknu_mc_status () {
 }
 
 nknu_git_status='$(nknu_git_status)'
+nknu_svn_status='$(nknu_svn_status)'
 nknu_mc_status='$(nknu_mc_status)'
 nknu_docker_status='$(nknu_docker_status)'
 
@@ -83,6 +91,7 @@ nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
 PROMPT="
  ${nknu_username}${nknu_hostname}${nknu_mc_status}%{$fg[cyan]%} \
 ${nknu_git_status}\
+${nknu_svn_status}\
 ${nknu_docker_status}\
 %{$fg[white]%}%~
 %{$fg[cyan]%}\
