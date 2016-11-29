@@ -1,3 +1,6 @@
+# loading variable override file
+[[ -f ~/.nknu_theme_config ]] && source ~/.nknu_theme_config
+
 # '#' for root prompt, '$' for regular user
 [[ $(whoami) == "root" ]] && local prompt_type='#' || local prompt_type='$'
 
@@ -81,7 +84,7 @@ nknu_mc_status='$(nknu_mc_status)'
 nknu_docker_status='$(nknu_docker_status)'
 
 # Display hostname in yellow if we're SSHing, green otherwise
-[[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[red]%}@%{$fg[yellow]%}%m%{$reset_color%}"
+[[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[red]%}@%{$fg[${NKNU_THEME_HOST_COLOR:-yellow}]%}%m%{$reset_color%}"
 
 # Display username in red if we're root, white otherwise
 nknu_username="%{$fg_bold[white]%}%n%{$reset_color%}"
