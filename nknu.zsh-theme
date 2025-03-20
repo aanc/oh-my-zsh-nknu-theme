@@ -14,9 +14,9 @@ nknu_git_status () {
 	local _stage_status=
 	local _ahead_behind=
 
-	local _char_ahead="-ahead- "
-	local _char_behind="-behind- "
-	local _char_diverged="-diverged- "
+	local _char_ahead="-ahead-"
+	local _char_behind="-behind-"
+	local _char_diverged="-diverged-"
 	local _char_status="● "
 
 	# Git status to retrieve infos
@@ -39,19 +39,19 @@ nknu_git_status () {
 
 	# if ahead
 	local ahead=
-	[[ -n $(echo "$_s" | grep '^## .*ahead' 2> /dev/null) ]] && _ahead_behind="${_ahead_behind}%{$fg[green]%}${_char_ahead}%{$reset_color%}" && ahead=1
+	[[ -n $(echo "$_s" | grep '^## .*ahead' 2> /dev/null) ]] && _ahead_behind="${_ahead_behind}%{$fg[green]%}${_char_ahead}%{$reset_color%} " && ahead=1
 
 	# if behind
 	local behind=
-	[[ -n $(echo "$_s" | grep '^## .*behind' 2> /dev/null) ]] && _ahead_behind="${_ahead_behind}%{$fg[red]%}${_char_behind}%{$reset_color%}" && behind=1
+	[[ -n $(echo "$_s" | grep '^## .*behind' 2> /dev/null) ]] && _ahead_behind="${_ahead_behind}%{$fg[red]%}${_char_behind}%{$reset_color%} " && behind=1
 
 	# ahead and behind == diverged !
-	[[ -n $ahead && -n $behind ]] && _ahead_behind="%{$fg[yellow]%}${_char_diverged}%{$reset_color%}"
+	[[ -n $ahead && -n $behind ]] && _ahead_behind="%{$fg[yellow]%}${_char_diverged}%{$reset_color%} "
 
 	[[ -z $_stage_status ]] && _stage_status="%{$fg[cyan]%}$_char_status%{$reset_color%}"
 
 	# Ok, print all that stuff !
-	echo "%{$fg_bold[yellow]%}git:%{$reset_color%}${_branch} ${_stage_status} ${_ahead_behind}"
+	echo "%{$fg_bold[yellow]%}git:%{$reset_color%}${_branch} ${_stage_status}${_ahead_behind}"
 }
 
 nknu_svn_status () {
@@ -78,10 +78,19 @@ nknu_mc_status () {
 	fi
 }
 
+nknu_proxy_status () {
+	if [[ -n $HTTP_PROXY ]]; then
+		echo "%{$fg[green]%}(proxy:on) %{$reset_color%}"
+	else
+		echo "%{$FG[009]%}(proxy:off) %{$reset_color%}"
+	fi
+}
+
 nknu_git_status='$(nknu_git_status)'
 nknu_svn_status='$(nknu_svn_status)'
 nknu_mc_status='$(nknu_mc_status)'
 nknu_docker_status='$(nknu_docker_status)'
+nknu_proxy_status='$(nknu_proxy_status)'
 
 # Display hostname in yellow if we're SSHing, green otherwise
 [[ -n $SSH_CONNECTION ]] && nknu_hostname="%{$fg[red]%}@%{$fg[${NKNU_THEME_HOST_COLOR:-yellow}]%}%m%{$reset_color%}"
@@ -96,6 +105,7 @@ PROMPT="
 ${nknu_git_status}\
 ${nknu_svn_status}\
 ${nknu_docker_status}\
+${nknu_proxy_status}\
 %{$fg[white]%}%~
 %{$fg[cyan]%}\
 %{$reset_color%}%{$fg[cyan]%} ${ret_status}%{$reset_color%} "
